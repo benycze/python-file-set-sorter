@@ -11,7 +11,7 @@
             "program": "${workspaceFolder}/sorter.py",
             "console": "integratedTerminal",
 
-            "args": ["--unique-files","" "--other-files", ""],
+            "args": ["--unique-files","data/setA/setA1.txt","data/setA/setA2.txt", "--other-files", "data/setB/setB1.txt","data/setB/setB2.txt"],
             "cwd": "${workspaceFolder}"
         }
     ]
