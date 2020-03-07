@@ -1,0 +1,18 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python - ",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/sorter.py",
+            "console": "integratedTerminal",
+
+            "args": ["--unique-files","data/p4/p4-16-nic-200g2ql.vivado.mk", "data/p4/np4-200g2ql_p4.vivado.mk", "--other-files", "data/others/dcpro-200g2ql-lr4.vivado.mk","data/others/nfb-200g2ql_hanic.vivado.mk","data/others/nfb-200g2ql_nic.vivado.mk","data/others/sdm.prj"],
+            "cwd": "${workspaceFolder}"
+        }
+    ]
+}
