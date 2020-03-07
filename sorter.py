@@ -16,13 +16,13 @@ def parse_arguments():
 
     Return: The function return the dictionary with parsed arguments
     """
-    parser = argparse.ArgumentParser(description='Process two sets of files and search for a unique files in the start group.'
-        'The program tries to find a unique files in Set A that are not in the Set B.'
+    parser = argparse.ArgumentParser(description='Process two sets of files and search for a unique files in the start group. '
+        'The program tries to find a unique files in Set A that are not in the Set B. '
         'The format of input data is a text file where each file is on a line ending with a \\n character. Empty lines are filtered out.\n\n'
-        'The format of unique files can contain the strip value which removes the first n paths from each analyzed files. The value can be defined'
+        'The format of unique files can contain the strip value which removes the first n paths from each analyzed files. The value can be defined '
         'globally or localy per file in the form FILE:STRIP, where the file is a file path and STRIP is the strip value.'
         'The default value (passed via the --strip argumnet) is assined iff the STRIP value is not defined.\n\n'
-        'Another possibility is to define a strip value directly in a file as the first line of the file where the format is STRIP=value, where'
+        'Another possibility is to define a strip value directly in a file as the first line of the file where the format is STRIP=value, where '
         'the value is a positive integer. The value inside the file has a bigger priority than value passed by in the argument.')
 
     # Add arguments

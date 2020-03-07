@@ -50,21 +50,16 @@ python3 sorter.py --unique-files data/input/* --other-files data/others/* $@ | t
 You can get more inforamtion about the tool using the `--help` option:
 
 ```
-python3 sorter.py --help
-usage: sorter.py [-h] --unique-files UNIQUE_FILES [UNIQUE_FILES ...]
-                 --other-files OTHER_FILES [OTHER_FILES ...] [--strip STRIP]
-                 [--debug]
-
-Process two sets of files and search for a unique files in the start group.The
-program tries to find a unique files in Set A that are not in the Set B.The
-format of input data is a text file where each file is on a line ending with a
-\n character. Empty lines are filtered out. The format of unique files can
-contain the strip value which removes the first n paths from each analyzed
-files. The value can be definedglobally or localy per file in the form
+Process two sets of files and search for a unique files in the start group.
+The program tries to find a unique files in Set A that are not in the Set B.
+The format of input data is a text file where each file is on a line ending
+with a \n character. Empty lines are filtered out. The format of unique files
+can contain the strip value which removes the first n paths from each analyzed
+files. The value can be defined globally or localy per file in the form
 FILE:STRIP, where the file is a file path and STRIP is the strip value.The
 default value (passed via the --strip argumnet) is assined iff the STRIP value
 is not defined. Another possibility is to define a strip value directly in a
-file as the first line of the file where the format is STRIP=value, wherethe
+file as the first line of the file where the format is STRIP=value, where the
 value is a positive integer. The value inside the file has a bigger priority
 than value passed by in the argument.
 
@@ -78,6 +73,6 @@ optional arguments:
                         unique set (= Set B)
   --strip STRIP         Default strip value for all passed files. The default
                         value is 4.
-  --debug               Enable the debug mode for the analysis.
+  --debug               Enable the debug mode for the analysis.             Enable the debug mode for the analysis.
 
 ```
