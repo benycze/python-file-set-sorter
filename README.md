@@ -78,3 +78,6 @@ optional arguments:
   --debug               Enable the debug mode for the analysis.             Enable the debug mode for the analysis.
 
 ```
+
+The tool also contains a stupid code which can be used for the
+generation of test files. It generes one file with inputs and second file with randomly selected files (from the first file). I suggest you to edit the file directly to customize it to your needs.
