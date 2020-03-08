@@ -12,11 +12,11 @@ After that, the tool runs the analysis where it takes all elements in the set A 
 
 This tool is just a quickly implemented because I needed to solve this as fast as possible and I didn't know about any suitable tool  which is available online.
 
-**WARNING**: The tool is very simple and it was written in 30 minutes. Therefore, I am actually missing some unit tests and the tool is not guarded against all users input :-).
+**WARNING**: The tool is very simple and it was written in 30 minutes. Therefore, I am actually missing some unit tests and the tool is not guarded against all user inputs :-).
 
 ## Input File Format
 
-The file format contains paths to files (one per a line). There is also a possibilty to specify the `STRIP` value which defines the number of removed path elements from the prefix. For example, the `STRIP=2` applied on `/home/user/abc` results to `abc`. The STRIP value can be passed as the first line of the file or you can specify the strip value as the parameter of passed file like `files.txt:2`. You can also specify the default strip value using the `--strip` parameter. Empty lines are filtered out. 
+The file format contains paths to files (one per a line). There is also a possibilty to specify the `STRIP` value which defines the number of removed path elements from the prefix. For example, the `STRIP=2` applied on `/home/user/abc` results to `abc`. The STRIP value can be passed as the first line of the file or you can specify the strip value as the parameter of passed file like `files.txt:2`. You can also specify the default strip value using the `--strip` parameter. Empty lines are filtered out.
 
 So, the example of file can be:
 
@@ -43,7 +43,7 @@ Without the `STRIP`:
 
 You can use this scrip to run the analysis:
 
-```
+```bash
 #!/usr/bin/env bash
 
 python3 sorter.py --unique-files data/input/* --other-files data/others/* $@ | tee output.txt
