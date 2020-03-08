@@ -28,12 +28,13 @@ def get_lines(file):
     lines = [line.strip() for line in lines]
 
     print("Detected platform: ", platform.system())
-    if platform.system() != "windows":
+    if platform.system() != "Windows":
         return lines
 
     # We need to rebuild all paths because windows is using different separator
     tmp_path_list = [tmp.split("/") for tmp in lines]
     lines = ["c:/"+ os.sep.join(tmp) for tmp in tmp_path_list]
+    print("Rebuilded lines: ",lines)
     return  lines
 
 def build_path(*args):
