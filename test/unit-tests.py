@@ -13,11 +13,7 @@ import sorter.arguments
 
 
 class TestArgParser(unittest.TestCase):
-    """
-    Unit test for the argument parsing from the command line
-    """
 
-    
     def test_parsing(self):
         argv =  ["unit-tests.py","--strip","4","--unique-files","fileA","fileB:4","--other-files","fileC:2","fileD"]
         unique_list  = ["fileA","fileB:4"]
@@ -51,6 +47,53 @@ class TestArgParser(unittest.TestCase):
         self.assertEqual(args.strip,0) 
         self.assertListEqual(args.unique_files,unique_list)
         self.assertListEqual(args.other_files,other_list)         
+
+
+class TestFileStream(unittest.TestCase):
+
+    def __get_lines(self,file):
+        """
+        Get the contnet of the file
+
+        Parameters:
+            - file - file path
+
+        Return the list of lines
+        """
+        f = open(file,'r')
+        ret = f.readlines()
+        f.close()
+        return  [line.strip() for line in ret]
+
+
+    def __check_fs_test(self,stripdef,stripexp,fileIn,fileRes,unmodlines,reslines):
+        """
+        Run the check of the filestream
+        """
+        # Run the test, load the file
+        fs = sorter.analyze.FileStream(fileIn,stripdef,False) 
+        
+        # Check results
+        self.assertEqual(fs.file,fileIn)
+        self.assertEqual(fs.strip,stripexp)
+
+        self.assertListEqual(fs.lines,unmodlines)
+        self.assertEqual(fs.fset,set(reslines))
+
+
+    def test_fs(self):
+
+        fileIn  = "data/setA1.txt"
+        fileRes = "data/setA1Res.txt"
+        reslines = self.__get_lines(fileRes)
+        unmodlines = self.__get_lines(fileIn)
+        self.__check_fs_test(3,3,fileIn,fileRes,unmodlines,reslines)
+
+        fileIn  = "data/setA1Strip.txt"
+        fileRes = "data/setA1StripRes.txt"
+        reslines = self.__get_lines(fileRes)
+        unmodlines = self.__get_lines(fileIn)[1:]
+        self.__check_fs_test(3,2,fileIn,fileRes,unmodlines,reslines)
 
 
 
