@@ -68,7 +68,15 @@ class TestFileStream(unittest.TestCase):
 
     def __check_fs_test(self,stripdef,stripexp,fileIn,fileRes,unmodlines,reslines):
         """
-        Run the check of the filestream
+        Run the check of the filestream.
+
+        Parameters:
+            - stripdef - default strip value
+            - stripexp - expected strip value
+            - fileIn - input file path
+            - fileRes - file path with results
+            - unmodlines - lines with not modified input
+            - reslines - stripped lines
         """
         # Run the test, load the file
         fs = sorter.analyze.FileStream(fileIn,stripdef,False) 
@@ -96,6 +104,10 @@ class TestFileStream(unittest.TestCase):
         self.__check_fs_test(3,2,fileIn,fileRes,unmodlines,reslines)
 
 
+class TestAnalyzer(unittest.TestCase):
+
+    def test_analyzer(self):
+        pass
 
 if __name__ == "__main__":
     unittest.main()
