@@ -28,7 +28,7 @@ def parse_arguments():
     # Add arguments
     parser.add_argument('--unique-files',type=str,nargs='+',help='The set of files which will be analyzed in the unique set (= Set A)',required=True)
     parser.add_argument('--other-files',type=str,nargs='+',help='The set of files which will be analyzed in the non-unique set (= Set B) ',required=True)
-    parser.add_argument('--strip',type=int,help='Default strip value for all passed files. The default value is 4.',default=4)
+    parser.add_argument('--strip',type=int,help='Default strip value for all passed files. The default value is 0.',default=0)
     parser.add_argument('--debug',action='store_true',help="Enable the debug mode for the analysis.")
 
     return parser.parse_args()
