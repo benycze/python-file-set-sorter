@@ -6,4 +6,5 @@
 # Author(s): Pavel Benacek <pavel.benacek@gmail.com>
 
 export PYTHONPATH=`pwd`${PYTHONPATH:+:${PYTHONPATH}}
-python3 test/unit-tests.py
+cd test
+python3 unit-tests.py
