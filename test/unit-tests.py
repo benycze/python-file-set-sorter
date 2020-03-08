@@ -8,6 +8,7 @@
 import unittest
 import pdb
 import os
+import platform
 
 import sorter.analyze
 import sorter.arguments
@@ -22,9 +23,17 @@ def get_lines(file):
     Return the list of lines
     """
     f = open(file,'r')
-    ret = f.readlines()
+    lines = f.readlines()
     f.close()
-    return  [line.strip() for line in ret]
+    lines = [line.strip() for line in lines]
+
+    if platform.system() == "Linux":
+        return lines
+
+    # We need to rebuild all paths because windows is using different separator
+    tmp_path_list = [tmp.split("/") for tmp in lines]
+    lines = ["c:/"+ os.sep.join(tmp) for tmp in tmp_path_list]
+    return  lines
 
 def build_path(*args):
     """
