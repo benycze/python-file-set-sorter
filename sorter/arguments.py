@@ -17,6 +17,8 @@ def parse_arguments(args):
 
     Return: The function return the dictionary with parsed arguments
     """
+    # Remove the leading app path
+    args = args[1:]
     parser = argparse.ArgumentParser(description='Process two sets of files and search for a unique files in the start group. '
         'The program tries to find a unique files in Set A that are not in the Set B. '
         'The format of input data is a text file where each file is on a line ending with a \\n character. Empty lines are filtered out.\n\n'
@@ -33,3 +35,4 @@ def parse_arguments(args):
     parser.add_argument('--debug',action='store_true',help="Enable the debug mode for the analysis.")
 
     return parser.parse_args(args)
+    

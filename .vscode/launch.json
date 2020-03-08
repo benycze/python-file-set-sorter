@@ -13,6 +13,18 @@
 
             "args": ["--unique-files","data/setA/setA1.txt","data/setA/setA2.txt", "--other-files", "data/setB/setB1.txt","data/setB/setB2.txt"],
             "cwd": "${workspaceFolder}"
-        }
+        },
+
+        // Unit tests debug target
+        {
+            "name": "Python - run unit tests",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/test/unit-tests.py",
+            "console": "integratedTerminal",
+            "cwd": "${workspaceFolder}/test",
+            "env": {"PYTHONPATH":"${workspaceFolder}"}
+        },
+        
     ]
 }

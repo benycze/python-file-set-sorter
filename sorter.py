@@ -11,7 +11,7 @@ import traceback
 import sorter
 
 def main():
-    args = sorter.parse_arguments(sys.argv[1:])
+    args = sorter.parse_arguments(sys.argv)
     if args.strip < 0:
         print("Strip parameter cannot be a negative value!")
         sys.exit(1)
