@@ -34,6 +34,7 @@ def build_path(*args):
         - args - list of path elements
     """
     ret = os.path.join(*args)
+    print("Constructed path is: ",ret)
     return ret
 
 class TestArgParser(unittest.TestCase):
@@ -117,10 +118,10 @@ class TestAnalyzer(unittest.TestCase):
     def test_analyzer(self):
         # Create a filestream with no stripping
         strip = 0
-        fsUniq = [sorter.FileStream(build_path("data","setAnalyzerUniq.txt"),strip,False)]
-        fsNonUniq = [sorter.FileStream(build_path("data","setAnalyzerOthers.txt"),strip,False)]
+        fsUniq = [sorter.FileStream(build_path("data","setAnalyzerUniq.txt"),strip,True)]
+        fsNonUniq = [sorter.FileStream(build_path("data","setAnalyzerOthers.txt"),strip,True)]
 
-        alg = sorter.analyze.AnalyzeFiles(fsUniq,fsNonUniq,False)
+        alg = sorter.analyze.AnalyzeFiles(fsUniq,fsNonUniq,True)
         alg.analyze()
         
         # Load results & check with sets
