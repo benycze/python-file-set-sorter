@@ -7,6 +7,7 @@
 
 import unittest
 import pdb
+import os
 
 import sorter.analyze
 import sorter.arguments
@@ -24,6 +25,16 @@ def get_lines(file):
     ret = f.readlines()
     f.close()
     return  [line.strip() for line in ret]
+
+def build_path(*args):
+    """
+    Build the path from passed list of elements
+
+    Paramters:
+        - args - list of path elements
+    """
+    ret = os.path.join(*args)
+    return ret
 
 class TestArgParser(unittest.TestCase):
 
@@ -88,14 +99,14 @@ class TestFileStream(unittest.TestCase):
 
 
     def test_fs(self):
-        fileIn  = "data/setA1.txt"
-        fileRes = "data/setA1Res.txt"
+        fileIn  = build_path("data","setA1.txt")
+        fileRes = build_path("data","setA1Res.txt")
         reslines = get_lines(fileRes)
         unmodlines = get_lines(fileIn)
         self.__check_fs_test(3,3,fileIn,fileRes,unmodlines,reslines)
 
-        fileIn  = "data/setA1Strip.txt"
-        fileRes = "data/setA1StripRes.txt"
+        fileIn  = build_path("data","setA1Strip.txt")
+        fileRes = build_path("data","setA1StripRes.txt")
         reslines = get_lines(fileRes)
         unmodlines = get_lines(fileIn)[1:]
         self.__check_fs_test(3,2,fileIn,fileRes,unmodlines,reslines)
@@ -106,15 +117,15 @@ class TestAnalyzer(unittest.TestCase):
     def test_analyzer(self):
         # Create a filestream with no stripping
         strip = 0
-        fsUniq = [sorter.FileStream("data/setAnalyzerUniq.txt",strip,False)]
-        fsNonUniq = [sorter.FileStream("data/setAnalyzerOthers.txt",strip,False)]
+        fsUniq = [sorter.FileStream(build_path("data","setAnalyzerUniq.txt"),strip,False)]
+        fsNonUniq = [sorter.FileStream(build_path("data","setAnalyzerOthers.txt"),strip,False)]
 
         alg = sorter.analyze.AnalyzeFiles(fsUniq,fsNonUniq,False)
         alg.analyze()
         
         # Load results & check with sets
-        resUniq = get_lines("data/setAnalyzerUniqRes.txt")
-        resNonUniq = get_lines("data/setAnalyzerNonUniqueRes.txt")
+        resUniq = get_lines(build_path("data","setAnalyzerUniqRes.txt"))
+        resNonUniq = get_lines(build_path("data","setAnalyzerNonUniqueRes.txt"))
         resUniq.sort()
         resNonUniq.sort()
 
