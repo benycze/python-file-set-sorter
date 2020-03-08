@@ -27,7 +27,7 @@ def get_lines(file):
     f.close()
     lines = [line.strip() for line in lines]
 
-    if platform.system() == "Linux":
+    if platform.system() != "Windows":
         return lines
 
     # We need to rebuild all paths because windows is using different separator
