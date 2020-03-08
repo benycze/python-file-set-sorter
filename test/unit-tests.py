@@ -13,6 +13,42 @@ import platform
 import sorter.analyze
 import sorter.arguments
 
+
+# Default debug value (e.g. it enables debug printing when set to True)
+DEBUG = False
+
+def recode_input(file,prefix = "",skip=0):
+    """
+    Recode the input file based on the passed path
+
+    Parameters:
+        - file - path to the file
+        - prefix - prefix which will  be appended
+        - skip - skip n records during recoding
+    """
+    # The default format of in paths inside the file is UNIX
+    print("Detected platform: ", platform.system())
+    if platform.system() != "Windows":
+        print("We don't need to change the input file ({}).".format(file))
+        return
+
+    # We need to rebuild all paths because windows is using different separator
+    lines = get_lines(file)
+    tmp_path_list = [tmp.split("/") for tmp in lines]
+
+    ret = []
+    for tmp in tmp_path_list:
+        if "STRIP=" in tmp[0]:
+            ret.append(tmp[0])
+        else:
+            ret.append(prefix + os.sep.join(tmp))
+
+    # Write output to the file
+    with open(file,'w') as f:
+        for line in ret:
+            f.write(line + "\n")
+    print("Files was rewritten")
+
 def get_lines(file):
     """
     Get the contnet of the file
@@ -26,16 +62,7 @@ def get_lines(file):
     lines = f.readlines()
     f.close()
     lines = [line.strip() for line in lines]
-
-    print("Detected platform: ", platform.system())
-    if platform.system() != "Windows":
-        return lines
-
-    # We need to rebuild all paths because windows is using different separator
-    tmp_path_list = [tmp.split("/") for tmp in lines]
-    lines = ["c:\\"+ os.sep.join(tmp) for tmp in tmp_path_list]
-    print("Rebuilded lines: ",lines)
-    return  lines
+    return lines
 
 def build_path(*args):
     """
@@ -129,10 +156,10 @@ class TestAnalyzer(unittest.TestCase):
     def test_analyzer(self):
         # Create a filestream with no stripping
         strip = 0
-        fsUniq = [sorter.FileStream(build_path("data","setAnalyzerUniq.txt"),strip,True)]
-        fsNonUniq = [sorter.FileStream(build_path("data","setAnalyzerOthers.txt"),strip,True)]
+        fsUniq = [sorter.FileStream(build_path("data","setAnalyzerUniq.txt"),strip,DEBUG)]
+        fsNonUniq = [sorter.FileStream(build_path("data","setAnalyzerOthers.txt"),strip,DEBUG)]
 
-        alg = sorter.analyze.AnalyzeFiles(fsUniq,fsNonUniq,True)
+        alg = sorter.analyze.AnalyzeFiles(fsUniq,fsNonUniq,DEBUG)
         alg.analyze()
         
         # Load results & check with sets
@@ -146,4 +173,15 @@ class TestAnalyzer(unittest.TestCase):
 
 
 if __name__ == "__main__":
+    # Recode everything inside the data folder (input data with full path)
+    recode_list = ["setA1Strip.txt","setA1.txt","setAnalyzerOthers.txt","setAnalyzerUniq.txt"]
+    for filename in recode_list:
+        recode_input(build_path("data",filename),"c:")
+    
+    # Recode everything inside the resutl file
+    recode_list = ["setA1StripRes.txt","setAnalyzerNonUniqueRes.txt","setAnalyzerUniqRes.txt",]
+    for filename in recode_list:
+        recode_input(build_path("data",filename))
+        
+
     unittest.main()
