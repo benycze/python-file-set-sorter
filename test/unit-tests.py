@@ -89,7 +89,7 @@ class TestFileStream(unittest.TestCase):
             - reslines - stripped lines
         """
         # Run the test, load the file
-        fs = sorter.analyze.FileStream(fileIn,stripdef,False,"/") 
+        fs = sorter.analyze.FileStream(fileIn,stripdef,False) 
         
         # Check results
         self.assertEqual(fs.file,fileIn)
@@ -118,10 +118,10 @@ class TestAnalyzer(unittest.TestCase):
     def test_analyzer(self):
         # Create a filestream with no stripping
         strip = 0
-        fsUniq = [sorter.FileStream(build_path("data","setAnalyzerUniq.txt"),strip,True,"/")]
-        fsNonUniq = [sorter.FileStream(build_path("data","setAnalyzerOthers.txt"),strip,True,"/")]
+        fsUniq = [sorter.FileStream(build_path("data","setAnalyzerUniq.txt"),strip,True)]
+        fsNonUniq = [sorter.FileStream(build_path("data","setAnalyzerOthers.txt"),strip,True)]
 
-        alg = sorter.analyze.AnalyzeFiles(fsUniq,fsNonUniq,True,"/")
+        alg = sorter.analyze.AnalyzeFiles(fsUniq,fsNonUniq,True)
         alg.analyze()
         
         # Load results & check with sets

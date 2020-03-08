@@ -7,20 +7,19 @@
 
 import os
 
-def strip_line(line,strip,fs):
+def strip_line(line,strip):
     """
     Take a line and perform a strip operation
 
     Parameter:
         - line - line to analyze
         - strip - strip value
-        - fs - filesystem separator
     """
     # We want to skip the first element (absolute or relative)
     new_strip = strip + 1 
-    striped_path = line.split(fs)
+    striped_path = line.split(os.sep)
     tmp_strip = striped_path[new_strip:]
-    new_path = fs.join(tmp_strip)
+    new_path = os.sep.join(tmp_strip)
     return new_path
 
 class FileStream:
@@ -51,7 +50,7 @@ class FileStream:
 
         return (fList[0],strip)
 
-    def __init__(self,line,default,debug,fs=os.sep):
+    def __init__(self,line,default,debug):
         """
         Initilization of the stip value for the given file
 
@@ -59,7 +58,6 @@ class FileStream:
             - line - line to process
             - default - default indent
             - debug - enable debug mode
-            - fs - filesystem separator, default is set based on the system
         """
         # Parse the line data
         tmp = self.__parse_strip(default,line)
@@ -89,7 +87,7 @@ class FileStream:
             raise ValueError("Strip value cannot be negative!")
 
         # Prepare the set which will be used for probing
-        s_lines = [strip_line(f, self.__strip, fs) for f in self.__lines]
+        s_lines = [strip_line(f, self.__strip) for f in self.__lines]
         self.__fset = set(s_lines)
 
         # Print debug information
@@ -142,14 +140,13 @@ class AnalyzeFiles:
     Module with the implementation of the analysis algorithm 
     """
 
-    def __init__(self, unique_files, other_files,debug,fs=os.sep):
+    def __init__(self, unique_files, other_files,debug):
         """
         Initilization of the analysis argument
 
         Parameter:
             - unique_files - list of files with from the uniqueset
             - other_files - list of files from the analyzed set
-            - fs - filesystem separator, the default one is taken from the system
         """
         self.unique_files = unique_files
         self.other_files  =  other_files
@@ -160,9 +157,6 @@ class AnalyzeFiles:
 
         # Setup the debug flag
         self.debug = debug
-
-        # Setup the filesystem path separator
-        self.fs = fs
 
     def __str__(self):
         """
@@ -200,7 +194,7 @@ class AnalyzeFiles:
         # Concatenate all unique files
         for uniqf in self.unique_files:
             # In the beginning, all files are appended and considered unique
-            striped_lines = [strip_line(f,uniqf.strip,self.fs) for f in uniqf.lines]
+            striped_lines = [strip_line(f,uniqf.strip) for f in uniqf.lines]
             self.unique_list.extend(striped_lines)
             banned_idx = []
 
