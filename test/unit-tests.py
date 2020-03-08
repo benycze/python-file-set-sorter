@@ -17,6 +17,17 @@ import sorter.arguments
 # Default debug value (e.g. it enables debug printing when set to True)
 DEBUG = False
 
+
+def print_msg(*msg):
+    """
+    Print message.
+
+    Parameters:
+        - msg - message to print
+    """
+    if DEBUG:
+        print(*msg)
+
 def recode_input(file,prefix = "",skip=0):
     """
     Recode the input file based on the passed path
@@ -27,9 +38,10 @@ def recode_input(file,prefix = "",skip=0):
         - skip - skip n records during recoding
     """
     # The default format of in paths inside the file is UNIX
-    print("Detected platform: ", platform.system())
+
+    print_msg("Detected platform: ", platform.system())
     if platform.system() != "Windows":
-        print("We don't need to change the input file ({}).".format(file))
+        print_msg("We don't need to change the input file ({}).".format(file))
         return
 
     # We need to rebuild all paths because windows is using different separator
@@ -47,7 +59,7 @@ def recode_input(file,prefix = "",skip=0):
     with open(file,'w') as f:
         for line in ret:
             f.write(line + "\n")
-    print("Files was rewritten")
+    print_msg("Files was rewritten")
 
 def get_lines(file):
     """
@@ -72,7 +84,7 @@ def build_path(*args):
         - args - list of path elements
     """
     ret = os.path.join(*args)
-    print("Constructed path is: ",ret)
+    print_msg("Constructed path is: ",ret)
     return ret
 
 class TestArgParser(unittest.TestCase):
