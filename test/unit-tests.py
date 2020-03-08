@@ -11,6 +11,19 @@ import pdb
 import sorter.analyze
 import sorter.arguments
 
+def get_lines(file):
+    """
+    Get the contnet of the file
+
+    Parameters:
+        - file - file path
+
+    Return the list of lines
+    """
+    f = open(file,'r')
+    ret = f.readlines()
+    f.close()
+    return  [line.strip() for line in ret]
 
 class TestArgParser(unittest.TestCase):
 
@@ -51,21 +64,6 @@ class TestArgParser(unittest.TestCase):
 
 class TestFileStream(unittest.TestCase):
 
-    def __get_lines(self,file):
-        """
-        Get the contnet of the file
-
-        Parameters:
-            - file - file path
-
-        Return the list of lines
-        """
-        f = open(file,'r')
-        ret = f.readlines()
-        f.close()
-        return  [line.strip() for line in ret]
-
-
     def __check_fs_test(self,stripdef,stripexp,fileIn,fileRes,unmodlines,reslines):
         """
         Run the check of the filestream.
@@ -90,24 +88,39 @@ class TestFileStream(unittest.TestCase):
 
 
     def test_fs(self):
-
         fileIn  = "data/setA1.txt"
         fileRes = "data/setA1Res.txt"
-        reslines = self.__get_lines(fileRes)
-        unmodlines = self.__get_lines(fileIn)
+        reslines = get_lines(fileRes)
+        unmodlines = get_lines(fileIn)
         self.__check_fs_test(3,3,fileIn,fileRes,unmodlines,reslines)
 
         fileIn  = "data/setA1Strip.txt"
         fileRes = "data/setA1StripRes.txt"
-        reslines = self.__get_lines(fileRes)
-        unmodlines = self.__get_lines(fileIn)[1:]
+        reslines = get_lines(fileRes)
+        unmodlines = get_lines(fileIn)[1:]
         self.__check_fs_test(3,2,fileIn,fileRes,unmodlines,reslines)
 
 
 class TestAnalyzer(unittest.TestCase):
 
     def test_analyzer(self):
-        pass
+        # Create a filestream with no stripping
+        strip = 0
+        fsUniq = [sorter.FileStream("data/setAnalyzerUniq.txt",strip,False)]
+        fsNonUniq = [sorter.FileStream("data/setAnalyzerOthers.txt",strip,False)]
+
+        alg = sorter.analyze.AnalyzeFiles(fsUniq,fsNonUniq,False)
+        alg.analyze()
+        
+        # Load results & check with sets
+        resUniq = get_lines("data/setAnalyzerUniqRes.txt")
+        resNonUniq = get_lines("data/setAnalyzerNonUniqueRes.txt")
+        resUniq.sort()
+        resNonUniq.sort()
+
+        self.assertListEqual(alg.unique_list,resUniq)
+        self.assertListEqual(alg.non_unique_list,resNonUniq)
+
 
 if __name__ == "__main__":
     unittest.main()
