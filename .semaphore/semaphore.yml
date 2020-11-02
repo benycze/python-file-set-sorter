@@ -1,3 +1,8 @@
+# Copyright 2020 by the project contributors
+# SPDX-License-Identifier: GPL-3.0-only
+#
+# Author(s): Pavel Benacek <pavel.benacek@gmail.com>
+
 version: v1.0
 name: Ubuntu & MacOS Pipeline
 agent:
@@ -34,5 +39,4 @@ blocks:
         - name: 'Job #1'
           commands:
             - checkout
-            - sem-version python 3.7
             - ./run-tests.sh
