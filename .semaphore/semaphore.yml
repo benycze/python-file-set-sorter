@@ -1,0 +1,51 @@
+# Copyright 2020 by the project contributors
+# SPDX-License-Identifier: GPL-3.0-only
+#
+# Author(s): Pavel Benacek <pavel.benacek@gmail.com>
+
+version: v1.0
+name: Ubuntu & MacOS Pipeline
+
+# We want to  use the linux by default
+agent:
+  machine:
+    type: e1-standard-2    # Linux machine type with 2 vCPUs, 4 GB of RAM
+    os_image: ubuntu1804   # The Ubuntu 18.04 OS image.
+
+fail_fast:
+  stop:
+    when: "true"  # enable strategy for branches, tags, and pull-requests
+
+blocks:
+  - name: "Python 3.8 Linux"
+    task:
+      jobs:
+        - name: "Test"
+          commands:
+            - checkout
+            - sem-version python 3.8
+            - ./run-tests.sh
+
+  - name: "Python 3.7 Linux"
+    task:
+      jobs:
+        - name: "Test"
+          commands:
+            - checkout
+            - sem-version python 3.7
+            - ./run-tests.sh
+
+ 
+
+              #  - name: "Python 3.7 MacOS"
+              #    task:
+              #     agent:
+              #        machine:
+              #            type: a1-standard-4
+              #            os_image: macos-xcode12
+              #      jobs:
+              #        - name: "Test"
+              #          commands:
+              #            - checkout
+              #            - ./run-tests.sh
+              #
