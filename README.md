@@ -1,7 +1,5 @@
 # Python File Set Analysis
 
-[![Build Status](https://benycze.semaphoreci.com/badges/python-file-set-sorter/branches/master.svg?style=shields)](https://benycze.semaphoreci.com/projects/python-file-set-sorter)
-
 This tool provides a simple analysis of files passed as inputs of the program. The user divides files with strings into two categories:
 
 * Set A - list of files in the first set
